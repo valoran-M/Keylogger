@@ -55,6 +55,8 @@ dkms.conf
 # External projects
 CMakeCache.txt
 CMakeFiles/*
+Makefile
+*.cmake
 
 ### vscode ###
 .vscode/*
