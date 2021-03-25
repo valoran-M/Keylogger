@@ -50,3 +50,16 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+### CMake Patch ###
+# External projects
+CMakeCache.txt
+CMakeFiles/*
+
+### vscode ###
+.vscode/*
+*.code-workspace
+
+### project files ###
+server
+client
