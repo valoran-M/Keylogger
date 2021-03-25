@@ -10,7 +10,7 @@ set(SERVER_HEADERS
 )
 
 
-add_executable(server server/main.c ${SERVER_SRCS} ${SERVER_HEADERS})
+add_executable(server server_src/main.c ${SERVER_SRCS} ${SERVER_HEADERS})
 target_compile_features(server PRIVATE cxx_std_17)
-target_include_directories(server PUBLIC src/)
+target_include_directories(server PUBLIC server/)
 target_link_libraries(server)
