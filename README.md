@@ -8,7 +8,6 @@
 ### BUILD
 
 ```
-cmake .
 make server
 make linux
 make windows
@@ -16,6 +15,7 @@ make windows
 
 ### RUN
 
+For run server :
 ```
 ./server
 ```

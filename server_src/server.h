@@ -5,7 +5,9 @@
 
 #include <winsock2.h>
 
-#elif defined (linux)
+#endif
+
+#ifdef __linux
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -34,13 +36,13 @@ typedef struct in_addr IN_ADDR;
 
 #include "client.h"
 
-static void init(void);
-static void end(void);
-static void app(void);
-static int init_connection(void);
-static void end_connection(int sock);
-static int read_client(SOCKET sock, char *buffer);
-static void remove_client(Client *clients, int to_remove, int *actual);
-static void clear_clients(Client *clients, int actual);
+void init(void);
+void end(void);
+void app(void);
+int init_connection(void);
+void end_connection(int sock);
+int read_client(SOCKET sock, char *buffer);
+void remove_client(Client *clients, int to_remove, int *actual);
+void clear_clients(Client *clients, int actual);
 
 #endif
