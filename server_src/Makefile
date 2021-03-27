@@ -1,13 +1,13 @@
 CC=gcc
 CFLGAS=-Wall -O
 LDFLAGS=
-EXEC=server
+EXEC=../server
 SRC=$(wildcard *.c)
 OBJ=$(SRC:.c=.o)
 
 all: $(EXEC)
 
-server: $(OBJ)
+../server: $(OBJ)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
