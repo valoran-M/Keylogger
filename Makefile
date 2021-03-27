@@ -1,17 +1,19 @@
 CC=gcc
+LDFLAGS=
 CFLAGS=-Wall -O
+SERVERPATH=server_src/
 
-server: server.o main.o server_src/server.h
-	$(CC) main.o server.o -o server
+SRCSERVER=$(wildcard $(SERVERPATH)*.c)
+OBJSERV=$(SRC:.c=.o)
 
-server.o: server_src/server.c server_src/server.h server_src/client.h
-	$(CC) -c -Wall server_src/server.c $(CFLAGS)
+server: $(OBJSERV)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
-main.o: server.o server_src/main.c server_src/server.h
-	$(CC) -c -Wall server_src/main.c $(CFLAGS)
+%.o: %.c
+	$(CC) -o $@ -c $< $(CFLAGS)
 
 clean:
-	rm -f *o
+	rm -f *.o core
 
-remove: clean
+mrproper: clean
 	rm -f server

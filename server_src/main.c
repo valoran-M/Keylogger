@@ -6,6 +6,6 @@ int main(int argc, char const *argv[])
 {
     init();
 
-    //end();
+    end();
     return 0;
 }
