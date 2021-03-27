@@ -3,7 +3,7 @@ CFLGAS=-Wall -O
 LDFLAGS=
 EXEC=../server
 SRC=$(wildcard *.c)
-OBJ=$(SRC:.c=.o)
+OBJ=$(SRC:%.c=%.o)
 
 all: $(EXEC)
 
@@ -11,7 +11,7 @@ all: $(EXEC)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) -o $@a -c $< $(CFLGAS)
+	$(CC) -o $@ -c $< $(CFLGAS)
 
 clean:
 	rm -f *.o
