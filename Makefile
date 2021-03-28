@@ -2,8 +2,9 @@ CFLAGS=-Wall -O
 SERVERPATH=server_src/
 
 server:
-	@echo '\E[31m'"Server compilation"
+	@echo -e "\E[31m Server compilation\E[0m"
 	@make -C $(SERVERPATH)
+	@rm -f $(SERVERPATH)*.o
 
 clean:
 	@make -C $(SERVERPATH) clean

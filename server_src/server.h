@@ -39,10 +39,10 @@ typedef struct in_addr IN_ADDR;
 void init(void);
 void end(void);
 void app(void);
-int init_connection(void);
-void end_connection(int sock);
 int read_client(SOCKET sock, char *buffer);
+int init_connection(void);
 void remove_client(Client *clients, int to_remove, int *actual);
 void clear_clients(Client *clients, int actual);
+void end_connection(int sock);
 
 #endif
