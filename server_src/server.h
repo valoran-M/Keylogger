@@ -30,19 +30,13 @@ typedef struct in_addr IN_ADDR;
 #endif
 
 #define PORT 2000
-#define MAX_CLIENT 10
 
 #define BUF_SIZE 1024
-
-#include "client.h"
 
 void init(void);
 void end(void);
 void app(void);
-int read_client(SOCKET sock, char *buffer);
+int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer);
 int init_connection(void);
-void remove_client(Client *clients, int to_remove, int *actual);
-void clear_clients(Client *clients, int actual);
-void end_connection(int sock);
 
 #endif
