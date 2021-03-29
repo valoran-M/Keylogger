@@ -77,5 +77,6 @@ void app(void)
         read_client(sock, &from, buffer);
         printf("%s", buffer);
     }
+    
     closesocket(sock);
 }

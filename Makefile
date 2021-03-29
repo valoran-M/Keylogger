@@ -1,8 +1,10 @@
 CFLAGS=-Wall -O
 SERVERPATH=server_src/
-CLIENLINUX=linux_client
+LINUXCLIENT=client_linux/
 
-server:
+all: server client_linux
+
+server: $(SERVERPATH)*.[ch]
 	@echo -e "\E[31m Server compilation\E[0m"
 	@make -C $(SERVERPATH)
 	@rm -f $(SERVERPATH)*.o
@@ -13,8 +15,8 @@ client_linux:
 	@rm -f $(CLIENLINUX)*.o
 
 clean:
-	@make -C $(SERVERPATH) clean
+	@rm -f */*.o
 
-delete:
+delete: clean
 	@rm -f server
 	@echo -e '\E[31m'"server was deleted"
