@@ -39,8 +39,7 @@ int init_connection()
 
 void send_message(SOCKET sock, SOCKADDR_IN *serv, char *buffer)
 {
-    socklen_t len = sizeof serv;
-    if (sendto(sock, buffer, strlen(buffer), 0, (SOCKADDR *)serv, &len) < 0)
+    if (sendto(sock, buffer, strlen(buffer), 0, (SOCKADDR *)serv, sizeof *serv) < 0)
     {
         perror("sendto()");
         exit(errno);
