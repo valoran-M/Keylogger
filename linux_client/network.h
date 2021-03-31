@@ -16,12 +16,12 @@ typedef struct sockaddr SOCKADDR;
 typedef struct in_addr IN_ADDR;
 
 #define PORT 2000
-
+#define IP "192.129.175.36"
 #define BUF_SIZE 1024
 
 void init(void);
 void end(void);
 void app(void);
-int init_connection(void);
+int init_connection(SOCKADDR_IN *sin);
 
 #endif
