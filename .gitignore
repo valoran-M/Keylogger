@@ -57,4 +57,4 @@ dkms.conf
 
 ### project files ###
 server
-client_linux 
+client

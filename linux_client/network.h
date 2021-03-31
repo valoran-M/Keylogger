@@ -22,6 +22,6 @@ typedef struct in_addr IN_ADDR;
 void init(void);
 void end(void);
 void app(void);
-int init_connection(SOCKADDR_IN *sin);
+int init_connection();
 
 #endif

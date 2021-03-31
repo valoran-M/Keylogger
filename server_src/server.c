@@ -57,7 +57,7 @@ int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer)
                       buffer, BUF_SIZE - 1,
                       0,
                       (SOCKADDR *)sin,
-                      sinsize)) < 0)
+                      &sinsize)) < 0)
         perror("recvfrom()");
 
     buffer[n] = 0;

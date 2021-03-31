@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
 
 #include "network.h"
 
@@ -25,14 +25,9 @@ void end(void)
 #endif
 }
 
-int init_connection(SOCKADDR_IN *sin)
+int init_connection()
 {
-    /* UDP so SOCK_DGRAM */
     SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
-
-    sin->sin_family = AF_INET;
-    sin->sin_port = htons(PORT);
-    sin->sin_addr.s_addr = inet_addr(IP);
 
     if (sock == INVALID_SOCKET)
     {
@@ -54,13 +49,18 @@ void send_message(SOCKET sock, SOCKADDR_IN *serv, char *buffer)
 void app()
 {
     char buffer[BUF_SIZE];
-    SOCKADDR_IN *serv;
-    SOCKET sock = init_connection(serv);
+    SOCKADDR_IN serv;
 
-    memset(buffer, '\0', sizeof(buffer));
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(PORT);
+    serv.sin_addr.s_addr = inet_addr(IP);
+
+    SOCKET sock = init_connection();
+
+    memset(buffer, '\0', sizeof(buffer) - 1);
 
     printf("Enter message : ");
     gets(buffer);
 
-    send_message(sock, serv, buffer);
+    send_message(sock, &serv, buffer);
 }
