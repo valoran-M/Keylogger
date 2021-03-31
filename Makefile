@@ -1,18 +1,18 @@
 CFLAGS=-Wall -O
 SERVERPATH=server_src/
-LINUXCLIENT=client_linux/
+LINUXCLIENT=linux_client/
 
-all: server client_linux
+all: server linux_client
 
 server: $(SERVERPATH)*.[ch]
 	@echo -e "\E[31m Server compilation\E[0m"
 	@make -C $(SERVERPATH)
 	@rm -f $(SERVERPATH)*.o
 
-client_linux:
-	@echo -e "\E[31m Client linux compilation\E[0m"
-	@make -C $(CLIENLINUX)
-	@rm -f $(CLIENLINUX)*.o
+linux_client: $(LINUXCLIENT)*.[ch]
+	@echo -e "\E[31m Linux client compilation\E[0m"
+	@make -C $(LINUXCLIENT)
+	@rm -f $(LINUXCLIENT)*.o
 
 clean:
 	@rm -f */*.o

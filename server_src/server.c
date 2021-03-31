@@ -58,9 +58,7 @@ int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer)
                       0,
                       (SOCKADDR *)sin,
                       sinsize)) < 0)
-    {
         perror("recvfrom()");
-    }
 
     buffer[n] = 0;
 
@@ -77,6 +75,6 @@ void app(void)
         read_client(sock, &from, buffer);
         printf("%s", buffer);
     }
-    
+
     closesocket(sock);
 }
