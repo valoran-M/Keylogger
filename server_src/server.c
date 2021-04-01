@@ -36,7 +36,7 @@ int init_connection(void)
         exit(errno);
     }
 
-    sin.sin_addr.s_addr = inet_addr(INADDR_ANY);
+    sin.sin_addr.s_addr = htonl(INADDR_ANY);
     sin.sin_port = htons(PORT);
     sin.sin_family = AF_INET;
 
@@ -58,7 +58,6 @@ int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer)
         perror("recvfrom()");
 
     printf("%d -> %s \n", n, buffer);
-    
     return n;
 }
 
