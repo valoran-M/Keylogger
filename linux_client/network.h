@@ -16,7 +16,7 @@ typedef struct sockaddr SOCKADDR;
 typedef struct in_addr IN_ADDR;
 
 #define PORT 2000
-#define IP "192.129.175.36"
+#define IP "127.0.0.1"
 #define BUF_SIZE 1024
 
 void init(void);

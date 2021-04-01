@@ -28,7 +28,7 @@ void end(void)
 int init_connection(void)
 {
     SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
-    SOCKADDR_IN sin = {0};
+    SOCKADDR_IN sin;
 
     if (sock == INVALID_SOCKET)
     {
@@ -36,7 +36,7 @@ int init_connection(void)
         exit(errno);
     }
 
-    sin.sin_addr.s_addr = htonl(INADDR_ANY);
+    sin.sin_addr.s_addr = inet_addr("127.0.0.1");
     sin.sin_port = htons(PORT);
     sin.sin_family = AF_INET;
 
@@ -51,17 +51,14 @@ int init_connection(void)
 int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer)
 {
     int n = 0;
-    size_t sinsize = sizeof *sin;
+    int sin_struct_length = sizeof(sin);
 
-    if ((n = recvfrom(sock,
-                      buffer, BUF_SIZE - 1,
-                      0,
-                      (SOCKADDR *)sin,
-                      (socklen_t *) &sinsize)) <= 0)
+    if (n = recvfrom(sock, buffer, sizeof(buffer), 0,
+                     (struct sockaddr *)&sin, &sin_struct_length) <= 0)
         perror("recvfrom()");
 
-    buffer[n] = 0;
-
+    printf("%d -> %s \n", n, buffer);
+    
     return n;
 }
 
@@ -69,11 +66,18 @@ void app(void)
 {
     SOCKET sock = init_connection();
     char buffer[BUF_SIZE];
+    char serv_buffer[BUF_SIZE];
+
     while (1)
     {
         SOCKADDR_IN from = {0};
         read_client(sock, &from, buffer);
-        printf("%s", buffer);
+        strcpy(serv_buffer, buffer);
+
+        for (int i = 0; serv_buffer[i]; ++i)
+            serv_buffer[i] = toupper(serv_buffer[i]);
+
+        sendto(sock, serv_buffer, strlen(serv_buffer), 0, (SOCKADDR *)&from, sizeof(from));
     }
 
     closesocket(sock);

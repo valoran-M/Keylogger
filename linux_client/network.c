@@ -50,17 +50,31 @@ void app()
 {
     char buffer[BUF_SIZE];
     SOCKADDR_IN serv;
+    SOCKET sock = init_connection();
+    int serv_struct_length = sizeof(serv);
 
     serv.sin_family = AF_INET;
     serv.sin_port = htons(PORT);
     serv.sin_addr.s_addr = inet_addr(IP);
-
-    SOCKET sock = init_connection();
 
     memset(buffer, '\0', sizeof(buffer) - 1);
 
     printf("Enter message : ");
     gets(buffer);
 
-    send_message(sock, &serv, buffer);
+    if (sendto(sock, buffer, strlen(buffer), 0,
+               (SOCKADDR *)&serv, serv_struct_length) < 0)
+    {
+        printf("Unable to send message\n");
+        return -1;
+    }
+
+    if (recvfrom(sock, buffer, sizeof(buffer), 0,
+                 (struct sockaddr *)&buffer, &buffer) < 0)
+    {
+        printf("Error while receiving server's msg\n");
+        return -1;
+    }
+
+    printf("Server's response: %s\n", buffer);
 }
