@@ -58,6 +58,3 @@ dkms.conf
 ### project files ###
 server
 client
-
-### folder ###
-logs/.gitkeep
