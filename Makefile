@@ -5,12 +5,12 @@ LINUXCLIENT=linux_client/
 all: server linux_client
 
 server: $(SERVERPATH)*.[ch]
-	@echo -e "\E[31m Server compilation\E[0m"
+	@echo -e "\E[32m Server compilation\E[0m"
 	@make -C $(SERVERPATH)
 	@rm -f $(SERVERPATH)*.o
 
 linux_client: $(LINUXCLIENT)*.[ch]
-	@echo -e "\E[31m Linux client compilation\E[0m"
+	@echo -e "\E[32m Linux client compilation\E[0m"
 	@make -C $(LINUXCLIENT)
 	@rm -f $(LINUXCLIENT)*.o
 
@@ -20,3 +20,5 @@ clean:
 delete: clean
 	@rm -f server
 	@echo -e '\E[31m'"server was deleted"
+	@rm -f client
+	@echo -e '\E[31m'"client was deleted"

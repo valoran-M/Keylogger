@@ -5,79 +5,67 @@
 
 #include "server.h"
 
-void init(void)
-{
-#ifdef WIN32
-    WSADATA wsa;
-    int err = WSAStartup(MAKEWORD(2, 2), &wsa);
-    if (err < 0)
-    {
-        puts("WSAStartup faild !");
-        exit(EXIT_FAILURE);
-    }
-#endif
-}
-
-void end(void)
-{
-#ifdef WIN32
-    WSACleanup();
-#endif
-}
-
 int init_connection(void)
 {
-    SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
-    SOCKADDR_IN sin;
+    int socket_desc;
+    struct sockaddr_in server_addr;
 
-    if (sock == INVALID_SOCKET)
+    socket_desc = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+    if (socket_desc < 0)
     {
-        perror("socket()");
-        exit(errno);
+        printf("Error while creating socket\n");
+        return -1;
     }
+    printf("Socket created successfully\n");
 
-    sin.sin_addr.s_addr = htonl(INADDR_ANY);
-    sin.sin_port = htons(PORT);
-    sin.sin_family = AF_INET;
+    // Set port and IP:
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(2000);
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    if (bind(sock, (SOCKADDR *)&sin, sizeof(sin)) == SOCKET_ERROR)
+    // Bind to the set port and IP:
+    if (bind(socket_desc, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
-        perror("bind()");
-        exit(errno);
+        printf("Couldn't bind to the port\n");
+        return -1;
     }
-    return sock;
+    printf("Done with binding\n");
+
+    printf("Listening for incoming messages...\n\n");
+    return socket_desc;
 }
 
-int read_client(SOCKET sock, SOCKADDR_IN *sin, char *buffer)
+char *read_client(int socket_desc, struct sockaddr_in client_addr)
 {
-    int n = 0;
-    int sin_struct_length = sizeof(sin);
-
-    if (n = recvfrom(sock, buffer, sizeof(buffer), 0,
-                     (struct sockaddr *)&sin, &sin_struct_length) <= 0)
-        perror("recvfrom()");
-
-    printf("%d -> %s \n", n, buffer);
-    return n;
 }
 
 void app(void)
 {
-    SOCKET sock = init_connection();
-    char buffer[BUF_SIZE];
-    char serv_buffer[BUF_SIZE];
+    int socket_desc = init_connection();
+    struct sockaddr_in client_addr;
+
+    char client_message[100];
+
+    // Clean buffers:
+    memset(client_message, '\0', sizeof(client_message));
+
+    int client_struct_length = sizeof(client_addr);
 
     while (1)
     {
-        SOCKADDR_IN from = {0};
-        read_client(sock, &from, buffer);
-        strcpy(serv_buffer, buffer);
 
-        for (int i = 0; serv_buffer[i]; ++i)
-            serv_buffer[i] = toupper(serv_buffer[i]);
+        if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
+                     (struct sockaddr *)&client_addr, &client_struct_length) < 0)
+        {
+            printf("Couldn't receive\n");
+            return -1;
+        }
+        printf("Received message from IP: %s and port: %i\n",
+               inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
 
-        sendto(sock, serv_buffer, strlen(serv_buffer), 0, (SOCKADDR *)&from, sizeof(from));
+        printf("Msg from client: %s\n", client_message);
     }
-
-    closesocket(sock);
+    // Close the socket:
+    close(socket_desc);
 }
