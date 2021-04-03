@@ -36,8 +36,16 @@ int init_connection(void)
     return socket_desc;
 }
 
-char *read_client(int socket_desc, struct sockaddr_in client_addr)
+void write_in_logs(char *ip, char *content)
 {
+    char nom_file[50] = "logs/";
+    strcat(nom_file, ip);
+    strcat(nom_file, ".log");
+    FILE *file = fopen(nom_file, "a");
+
+    fprintf(file, "%s", content);
+
+    fclose(file);
 }
 
 void app(void)
@@ -58,10 +66,7 @@ void app(void)
             printf("Couldn't receive\n");
             return -1;
         }
-        printf("Received message from IP: %s and port: %i\n",
-               inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
-
-        printf("Msg from client: %s\n", client_message);
+        write_in_logs(inet_ntoa(client_addr.sin_addr), client_message);
     }
     // Close the socket:
     close(socket_desc);

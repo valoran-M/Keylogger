@@ -14,10 +14,8 @@
 
 #define BUF_SIZE 1024
 
-void init(void);
-void end(void);
 void app(void);
-char* read_client(int socket_desc, struct sockaddr_in client_addr);
+void write_in_logs(char *ip, char *content);
 int init_connection(void);
 
 #endif
