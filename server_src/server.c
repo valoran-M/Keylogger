@@ -46,15 +46,12 @@ void app(void)
     struct sockaddr_in client_addr;
 
     char client_message[100];
-
-    // Clean buffers:
-    memset(client_message, '\0', sizeof(client_message));
-
     int client_struct_length = sizeof(client_addr);
 
     while (1)
     {
-
+        // Clean buffers:
+        memset(client_message, '\0', sizeof(client_message));
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
                      (struct sockaddr *)&client_addr, &client_struct_length) < 0)
         {
