@@ -33,7 +33,6 @@ void app()
     int sock = init_connection();
     struct sockaddr_in serv;
     char client_message[BUF_SIZE];
-    int serv_struct_length = sizeof(serv);
 
     memset(client_message, '\0', sizeof(client_message));
 
@@ -42,12 +41,8 @@ void app()
     serv.sin_port = htons(PORT);
     serv.sin_addr.s_addr = inet_addr(IP);
 
-    printf("%d, %s", sizeof(client_message), client_message);
-
     printf("Enter message : ");
     scanf("%s", client_message);
-
-    printf("%d -> %s\n", strlen(client_message), client_message);
 
     send_message(sock, serv, client_message);
 }

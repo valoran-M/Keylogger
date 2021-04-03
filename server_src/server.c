@@ -53,8 +53,8 @@ void app(void)
     int socket_desc = init_connection();
     struct sockaddr_in client_addr;
 
-    char client_message[100];
-    int client_struct_length = sizeof(client_addr);
+    char client_message[BUF_SIZE];
+    socklen_t client_struct_length = sizeof(client_addr);
 
     while (1)
     {
@@ -62,10 +62,7 @@ void app(void)
         memset(client_message, '\0', sizeof(client_message));
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
                      (struct sockaddr *)&client_addr, &client_struct_length) < 0)
-        {
             printf("Couldn't receive\n");
-            return -1;
-        }
         write_in_logs(inet_ntoa(client_addr.sin_addr), client_message);
     }
     // Close the socket:
