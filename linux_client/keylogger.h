@@ -5,6 +5,6 @@
 
 extern void keylogger_init(void);
 extern void keylogger_exit(void);
-extern char *keylogger_run(void);
+extern const char *keylogger_event(void);
 
 #endif

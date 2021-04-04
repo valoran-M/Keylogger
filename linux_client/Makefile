@@ -8,10 +8,10 @@ OBJ=$(SRC:%.c=%.o)
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	@$(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	@$(CC) -o $@ -c $< $(CFLGAS)
+	$(CC) -o $@ -c $< $(CFLGAS)
 
 clean:
 	@rm -f *.o
