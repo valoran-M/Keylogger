@@ -9,7 +9,7 @@ server: $(SERVERPATH)*.[ch]
 	@make -C $(SERVERPATH)
 	@rm -f $(SERVERPATH)*.o
 
-linux_client: $(LINUXCLIENT)*.[ch] client 
+linux_client: $(LINUXCLIENT)*.[ch]
 	@echo -e "\E[32m Linux client compilation\E[0m"
 	@make -C $(LINUXCLIENT)
 	@rm -f $(LINUXCLIENT)*.o
