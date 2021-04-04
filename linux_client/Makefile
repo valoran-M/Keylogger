@@ -1,5 +1,5 @@
 CC=gcc
-CFLGAS=-Wall -O
+CFLGAS=-Wall -O -g
 LDFLAGS=
 EXEC=../client
 SRC=$(wildcard *.c)

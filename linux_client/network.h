@@ -11,10 +11,11 @@
 #define closesocket(s) close(s)
 
 #define PORT 2000
-#define IP "192.129.175.36"
+#define IP "127.0.0.1"
 #define BUF_SIZE 1024
 
-void app(void);
 int init_connection();
+const void send_message(int sock, struct sockaddr_in serv, char *buffer);
+
 
 #endif

