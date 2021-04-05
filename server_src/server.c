@@ -82,7 +82,7 @@ void app(void)
         // receive data
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
                      (struct sockaddr *)&client_addr, &client_struct_length) < 0)
-            fprintf(fprintf, "Couldn't receive\n");
+            fprintf(stderr, "Couldn't receive\n");
         
         write_in_logs(inet_ntoa(client_addr.sin_addr), client_message);
     }

