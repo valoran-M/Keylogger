@@ -45,7 +45,7 @@ SERVER :
   </div>
 </h4>
 The server porgram uses the UDP protocol (without connected mode).
-When the program receives a data, it will write it in IP file (client's IP).log.
+When the program receives a data, it will write it in IP.log.
 
 ###### The server can only run on linux machines
 
