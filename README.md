@@ -41,7 +41,7 @@ sudo ./client
 <h4>
 SERVER :
   <div align="center">
-    <img src="images/server_explain.png" alt="Key loger Logo">
+    <img src="images/server.png" alt="Key loger Logo">
   </div>
 </h4>
 The server porgram uses the UDP protocol (without connected mode).
@@ -56,4 +56,8 @@ LINUX CLIENT :
 <div align="center">
  <h2>DISCLAILER</H2>
 </div>
-I made an educational program to see how this kind of program works on linux and windows machines. I am not responsible for the use that can be made of it
+I made an educational program to see how this kind of program works on linux and windows machines. 
+I am not responsible for the use that can be made of it.
+<br>
+<br>
+If you have any suggestions for improvement, I am always interested
