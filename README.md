@@ -2,7 +2,7 @@
 <h1 align="center">
   KEYLOGGER
   <br>
-  <img src="keylogger.png" alt="Key loger Logo" width="256">
+  <img src="images/keylogger.png" alt="Key loger Logo" width="256">
   <br>
 </h1>
 
@@ -33,11 +33,21 @@ sudo ./client
 
 <div align="center">
  <h2>EXPLAIN</H2>
+ <br>
+  
+ </br>
 </div>
 
 <h4>
 SERVER :
+  <div align="center">
+    <img src="images/server_explain.png" alt="Key loger Logo">
+  </div>
 </h4>
+The server porgram uses the UDP protocol (without connected mode).
+When the program receives a data, it will write it in IP file (client's IP).log.
+
+###### The server can only run on linux machines
 
 <h4>
 LINUX CLIENT :

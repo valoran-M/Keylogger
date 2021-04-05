@@ -1,10 +1,16 @@
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <string.h>
 
 #include "server.h"
 
+/** 
+ *  This function initializes the connection if is not possible she leaves the program
+ * 
+ *  @param void
+ *  @return socket created (int)
+*/
 int init_connection(void)
 {
     int socket_desc;
@@ -14,8 +20,8 @@ int init_connection(void)
 
     if (socket_desc < 0)
     {
-        printf("Error while creating socket\n");
-        return -1;
+        fprintf(stderr, "Error while creating socket\n");
+        exit(EXIT_FAILURE);
     }
     printf("Socket created successfully\n");
 
@@ -27,8 +33,8 @@ int init_connection(void)
     // Bind to the set port and IP:
     if (bind(socket_desc, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0)
     {
-        printf("Couldn't bind to the port\n");
-        return -1;
+        fprintf(stderr, "Couldn't bind to the port\n");
+        exit(EXIT_FAILURE);
     }
     printf("Done with binding\n");
 
@@ -36,6 +42,13 @@ int init_connection(void)
     return socket_desc;
 }
 
+/** 
+ *  This function writes a string in a logs/ip.log
+ *  
+ *  @param string client ip
+ *  @param content data written to the file 
+ *  @return void
+ */
 void write_in_logs(char *ip, char *content)
 {
     char nom_file[50] = "logs/";
@@ -48,6 +61,12 @@ void write_in_logs(char *ip, char *content)
     fclose(file);
 }
 
+/**
+ *  The most import fonction with the buckle and the reception of data
+ * 
+ *  @param void
+ *  @return void
+ */
 void app(void)
 {
     int socket_desc = init_connection();
@@ -58,11 +77,13 @@ void app(void)
 
     while (1)
     {
-        // Clean buffers:
+        // Clean client_message
         memset(client_message, '\0', sizeof(client_message));
+        // receive data
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
                      (struct sockaddr *)&client_addr, &client_struct_length) < 0)
-            printf("Couldn't receive\n");
+            fprintf(fprintf, "Couldn't receive\n");
+        
         write_in_logs(inet_ntoa(client_addr.sin_addr), client_message);
     }
     // Close the socket:
