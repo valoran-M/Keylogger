@@ -56,7 +56,7 @@ void write_in_logs(char *ip, char *content)
     strcat(nom_file, ".log");
     FILE *file = fopen(nom_file, "a");
 
-    fprintf(file, "%s\n", content);
+    fprintf(file, "%s", content);
 
     fclose(file);
 }

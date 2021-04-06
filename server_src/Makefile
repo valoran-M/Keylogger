@@ -10,12 +10,12 @@ all: $(EXEC)
 ../server: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
-main.c: server.h
-
-server.c: server.h
-
 %.o: %.c
 	@$(CC) -o $@ -c $< $(CFLGAS)
+
+main.o: server.h
+
+server.o: server.h
 
 clean:
 	@rm -f *.o
