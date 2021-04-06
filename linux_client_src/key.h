@@ -31,4 +31,18 @@ static const char *shifted_keycodes[] =
      "[DOWN]", "[PAGE_DOWN]", "[INSERT]", "[DELETE]", UK, UK, UK, UK, UK, UK, UK,
      "[PAUSE]"};
 
+static const char *alrgr_keycodes[] =
+    {"[RESERVED]", "[ESC]", "¹", "~", "#", "{", "[", "|", "`", "\\", "^", "@",
+     "]", "}", "[BACKSPACE]", "[TAB]", "æ", "«", "€", "¶", "ŧ", "←", "↓", "→",
+     "ø", "þ", UK, "¤", "[ENTER]\n", "[L_CTRL]", "@", "ß", "ð", "đ", "ŋ", "ħ",
+     UK, "ĸ", "ł", "µ", UK, "~", "[L_SHIFT]", "µ", "ł", "»", "¢", "“", "”",
+     "n", UK, "─", "·", "UK", "[R_SHIFT]", UK, "[L_ALT]", "[SPACE]", "[CAPS_LOCK]",
+     "[F1]", "[F2]", "[F3]", "[F4]", "[F5]", "[F6]", "[F7]", "[F8]", "[F9]", "[F10]", "[NUM_LOCK]",
+     "[SCROLL_LOCK]", "[HOME]", "[UP]", "[PGUP]", "-", "[LEFT]", "NL_5",
+     "[R_ARROW]", "+", "[END]", "[DOWN]", "[PGDN]", "[INS]", "[DEL]", UK, UK, ">",
+     "F11", "F12", UK, UK, UK, UK, UK, UK, UK, "[R_ENTER]", "[R_CTRL]", "/",
+     "[PRT_SCR]", "[R_ALT]", UK, "[HOME]", "[UP]", "[PAGE_UP]", "[LEFT]", "[RIGHT]", "[END]",
+     "[DOWN]", "[PAGE_DOWN]", "[INSERT]", "[DELETE]", UK, UK, UK, UK, UK, UK, UK,
+     "[PAUSE]"};
+
 #endif

