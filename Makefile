@@ -1,6 +1,6 @@
 CFLAGS=-Wall -O
-SERVERPATH=server_src/
-LINUXCLIENT=linux_client_src/
+SERVERPATH=src_server/
+LINUXCLIENT=src_linux_client/
 
 all: server linux_client
 
