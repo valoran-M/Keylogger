@@ -1,19 +1,19 @@
 CC=gcc
 CFLGAS=-Wall -O
 LDFLAGS=
-EXEC=../server
+EXEC=../windows_client
 SRC=$(wildcard *.c)
 OBJ=$(SRC:%.c=%.o)
 
 all: $(EXEC)
 
-../winsows_client: $(OBJ)
+../windows_client: $(OBJ)
 	@$(CC) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
 	@$(CC) -o $@ -c $< $(CFLGAS)
 
-main.o: server.h
+main.o: 
 
 clean:
 	@rm -f *.o

@@ -3,7 +3,7 @@ SERVERPATH=src_server/
 LINUXCLIENT=src_linux_client/
 WINCLIENT=src_windows_client/
 
-all: server linux_client WINCLIENT
+all: server linux_client windows_client
 
 server: $(SERVERPATH)*.[ch]
 	@echo -e "\E[32m Server compilation\E[0m"
@@ -18,7 +18,6 @@ linux_client: $(LINUXCLIENT)*.[ch]
 windows_client: $(LINUXCLIENT)*.[ch]
 	@echo -e "\E[32m Linux client compilation\E[0m"
 	@make -C $(WINCLIENT)
-	@rm -f $(WINCLIENT)*.o
 
 clean:
 	@rm -f */*.o
