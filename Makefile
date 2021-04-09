@@ -25,5 +25,5 @@ clean:
 delete: clean
 	@rm -f server
 	@echo -e '\E[31m'"server was deleted"
-	@rm -f client
+	@rm -f linux_client
 	@echo -e '\E[31m'"client was deleted"
