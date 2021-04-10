@@ -1,13 +1,11 @@
-#include <stdio.h>
-#include <windows.h>
-
-#include "key.h"
+#include "network.h"
 
 int main(int argc, char *argv[])
 {
-    while (1)
-        for (DWORD i = 0; i < 255; i++)
-            if(GetAsyncKeyState(i) == -32767)
-                printf("%s", translate_key(i));
+    init();
+    
+    app();
+
+    end();
     return 0;
 }
