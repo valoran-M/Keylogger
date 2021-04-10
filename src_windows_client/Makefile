@@ -13,7 +13,9 @@ all: $(EXEC)
 %.o: %.c
 	@$(CC) -o $@ -c $< $(CFLGAS)
 
-main.o: 
+main.o: key.c key.h
+
+key.o: key.h
 
 clean:
 	@rm -f *.o

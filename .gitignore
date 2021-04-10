@@ -58,3 +58,5 @@ dkms.conf
 ### project files ###
 server
 linux_client
+windows_client.exe
+test.c
