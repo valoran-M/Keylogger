@@ -12,7 +12,7 @@
 
 #define PORT 2000
 #define IP "127.0.0.1"
-#define BUF_SIZE 1024
+#define BUF_SIZE 50
 
 int init_connection();
 const void send_message(int sock, struct sockaddr_in serv, char *buffer);

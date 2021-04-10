@@ -1,7 +1,7 @@
 #ifndef KEY_H
 #define KEY_H
 
-#define KEY_SIZE 20
+#define KEY_SIZE 50
 #define UK "[UNKNOW]"
 
 char *translate_key(DWORD vkCode);
