@@ -41,7 +41,7 @@ sudo ./client
 <h4>
 SERVER :
   <div align="center">
-    <img src="images/server.png" alt="Key loger Logo">
+    <img src="images/server.png" alt="Server explain">
   </div>
 </h4>
 The server porgram uses the UDP protocol (without connected mode).
@@ -53,7 +53,7 @@ When the program receives a data, it will write it in IP.log.
 <h4>
 LINUX CLIENT :
 <div align="center">
-    <img src="images/linux_client.png" alt="Key loger Logo">
+    <img src="images/linux_client.png" alt="Linux client explain">
   </div>
 </h4>
 
@@ -85,6 +85,12 @@ The SIGINT(ctl + c) signal is redirected for a clean stop of the program.
 The /dev directory contains all files for all devices.<br />
 So we go to input directory to have all the input files.
 
+<h4>
+WINDOWS CLIENT :
+  <div align="center">
+    <img src="" alt="Windows client explain">
+  </div>
+</h4>
 
 <div align="center">
  <h2>DISCLAILER</H2>
