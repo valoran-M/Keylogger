@@ -77,7 +77,7 @@ char *other(DWORD vkCode)
     case VK_CLEAR:
         return "[CLEAR]";
     case VK_RETURN:
-        return "[RETURN]";
+        return "[RETURN]\n";
     case VK_SHIFT:
         return "[SHIFT]";
     case VK_CONTROL:
@@ -91,7 +91,7 @@ char *other(DWORD vkCode)
     case VK_ESCAPE:
         return "[ESCAPE]";
     case VK_SPACE:
-        return "[SPACE]";
+        return " ";
     case VK_PRIOR:
         return "[PRIOR]";
     case VK_NEXT:
